@@ -1,0 +1,13 @@
+Source;Target;Type;Id
+15;16;Undirected;21
+16;17;Undirected;22
+16;18;Undirected;30
+17;18;Undirected;23
+18;19;Undirected;25
+18;20;Undirected;31
+18;23;Undirected;24
+19;20;Undirected;32
+19;21;Undirected;26
+20;22;Undirected;28
+21;20;Undirected;27
+22;15;Undirected;29

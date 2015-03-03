@@ -1,0 +1,14 @@
+Source;Target;Type
+1;9;Undirected
+2;1;Undirected
+2;3;Undirected
+2;6;Undirected
+3;5;Undirected
+4;2;Undirected
+5;8;Undirected
+6;4;Undirected
+6;5;Undirected
+7;5;Undirected
+7;6;Undirected
+8;7;Undirected
+9;7;Undirected
