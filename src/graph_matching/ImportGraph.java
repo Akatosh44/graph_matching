@@ -59,6 +59,23 @@ public class ImportGraph {
 		}
 		return matResult;
 	  }
+	public static void normalize(SimpleMatrix matM, SimpleMatrix matS){
+		double max=0;
+		for(int i=0;i<matM.getMatrix().getNumElements();i++){
+			if(matM.get(i)>max){
+				max=matM.get(i);
+			}
+		}
+		for(int i=0;i<matS.getMatrix().getNumElements();i++){
+			matS.set(i,matS.get(i)/max);
+		}
+		
+		for(int i=0;i<matM.getMatrix().getNumElements();i++){
+			matM.set(i,matM.get(i)/max);
+		}
+		
+		
+	}
 	public static SimpleMatrix importGraphFromCSV(String fileName){
 		String csvFile = fileName+".csv";
 		BufferedReader br = null;
@@ -210,6 +227,17 @@ public class ImportGraph {
 				}
 			}
 		}
+	}
+	public static SimpleMatrix toBinary(SimpleMatrix mat){
+		SimpleMatrix result=new SimpleMatrix(mat.getMatrix().getNumRows(),mat.getMatrix().getNumCols());
+		for(int i=0;i<mat.getNumElements();i++){
+			if(mat.get(i)>0){
+				result.set(i,1);
+			}else{
+				result.set(i,0);
+			}
+		}
+		return result;
 	}
 }
 

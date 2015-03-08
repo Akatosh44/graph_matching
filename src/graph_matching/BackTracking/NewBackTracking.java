@@ -46,7 +46,7 @@ public class NewBackTracking {
 		}
 		
 		
-		values=new ArrayList<Double>();
+		/*values=new ArrayList<Double>();
 		values.add(gamma);
 		double i=0;
 		while(i<1){
@@ -60,7 +60,7 @@ public class NewBackTracking {
 			}
 			values.add(computeMin(lambda, gamma,incr));
 			i+=0.1;
-		}
+		}*/
 		if(alpha==0){
 			alpha=0.5;
 		}else if(alpha>1){

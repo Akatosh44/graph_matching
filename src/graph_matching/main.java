@@ -14,6 +14,8 @@ public class main {
 	public static SimpleMatrix As;
 	public static SimpleMatrix Am;
 	public static ArrayList<Double> resultValues;
+	public static String scenarioModele="rennes";
+	public static String scenarioSource="nantes";
 	public static void main(String[] args) {
 		resultValues=new ArrayList<Double>();
 		for(int k=0;k<1;k++){
@@ -59,11 +61,15 @@ public class main {
 		Am=ImportGraph.removeZeros(Am);
 		//Am=a;
 		As=Am;
-		//Am=ImportGraph.removeZeros(ImportGraph.importGraphFromCSV("data/rennes_extracted"));
-		//As=ImportGraph.removeZeros(ImportGraph.importGraphFromCSV("data/rennes_acquisition"));
+		//Am=ImportGraph.removeZeros(ImportGraph.importGraphFromCSV("data/brest_extracted"));
+		//As=ImportGraph.removeZeros(ImportGraph.importGraphFromCSV("data/nantes_acquisition"));
 
-		//Am=ImportGraph.importAdjFromCSV("data/nantes_geom_modele");
-		//As=ImportGraph.importAdjFromCSV("data/nantes_geom_modele");
+		Am=ImportGraph.toBinary(ImportGraph.importAdjFromCSV("data/"+scenarioModele+"_geom_modele"));
+		As=ImportGraph.toBinary(ImportGraph.importAdjFromCSV("data/"+scenarioSource+"_geom_acquisition"));
+		ImportGraph.normalize(Am, As);
+		//Am=ImportGraph.importAdjFromCSV("data/rennes_geom_modele");
+		//As=ImportGraph.importAdjFromCSV("data/nantes_geom_acquisition");
+		As.minus(As.transpose()).print();
 		Am.print();
 		As.print();
 
@@ -252,20 +258,29 @@ public class main {
 		System.out.println("\nFinal permutation matrix P=");
 		P.print();
 		
-		Am.print();
+		//WE PRINT THE RESULTS
+		//Results of binary
 		SimpleMatrix temp1=Am.minus(P.mult(As).mult(P.transpose()));
-		temp1.print();
+		//temp1.print();
 		double objValue=(temp1.transpose().mult(temp1)).trace()*(1.0/P.getMatrix().getNumRows());
-		System.out.println("VALUE OF OBJECTIVE FUNCTION :"+objValue);
-		ImportGraph.exportMatrixToCSV("data/retrmat1", P.mult(As).mult(P.transpose()));
+		System.out.println("VALUE OF BINARY OBJECTIVE FUNCTION :"+objValue);
+		//Results of geom
+		Am=ImportGraph.importAdjFromCSV("data/"+scenarioModele+"_geom_modele");
+		As=ImportGraph.importAdjFromCSV("data/"+scenarioSource+"_geom_acquisition");
+		ImportGraph.normalize(Am, As);
+		temp1=Am.minus(P.mult(As).mult(P.transpose()));
+		//temp1.print();
+		objValue=(temp1.transpose().mult(temp1)).trace()*(1.0/P.getMatrix().getNumRows());
+		System.out.println("VALUE OF GEOM OBJECTIVE FUNCTION :"+objValue);
+			
+
 		endTime = System.nanoTime();
 		totalTime = HungarianAlgorithmEdu.getTime(startTime, endTime);
 		System.out.print("Total time required to find P: ");
 		HungarianAlgorithmEdu.printTime(totalTime);
 		HungarianAlgorithmEdu.insertLines(1);
-		NewBackTracking.exportFunction(valuesOfBT);
-		resultValues.add(objValue);
-		ImportGraph.exportArray(resultValues);
+
+		
 		}
 		
 	}
